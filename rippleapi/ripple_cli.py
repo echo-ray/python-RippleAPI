@@ -2,8 +2,6 @@ import click
 
 from ripple import RippleClient
 
-TEST_SERVER = 'https://s.altnet.rippletest.net:51234'
-
 class State(object):
     '''
     Dummy class to store state attributes
@@ -17,7 +15,8 @@ class State(object):
 @click.pass_context
 def cli(ctx, debug, test_net):
     ctx.obj = State()
-    ctx.obj.server =  TEST_SERVER
+    if test_net:        
+        ctx.obj.server =  TEST_SERVER
 
 
 @cli.command()

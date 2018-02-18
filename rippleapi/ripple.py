@@ -5,7 +5,10 @@ import requests
 
 
 class RippleClient(object):
-    def __init__(self, server):
+    TEST_RIPPLE_SERVER = 'https://s.altnet.rippletest.net:51234'
+    PROD_RIPPLE_SERVER = 'https://s1.ripple.com:51234'
+
+    def __init__(self, server=PROD_RIPPLE_SERVER):
         self.server = server
 
     def _request(self, method, params, strict=True, ledger_index=None):
