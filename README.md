@@ -15,18 +15,18 @@ Go here to generate some keys before testing out this framework:
 https://ripple.com/build/xrp-test-net/
 
 ## Import the library
-```
+```python
 from rippleapi import (
     RippleClient,
     RippleTransaction,
 )
 ```
 ## Instantiate a client object
-```
+```python
 client = RippleClient()
 ```
 ## View current balance of an account
-```
+```python
 client.account_info('rDHpP3xnG2QRNtZc4KJPvtX3hidZbKRYHz')
 {'result': {'account_data': {'Account': 'rDHpP3xnG2QRNtZc4KJPvtX3hidZbKRYHz',
    'Balance': '10000000000',
@@ -44,7 +44,7 @@ client.account_info('rDHpP3xnG2QRNtZc4KJPvtX3hidZbKRYHz')
 ```
 
 ## Create a new transaction
-```
+```python
 tx = RippleTransaction(
     source_address='r9tGBU3Pg43r1xK9bHgfbsVXtLUWaRMYbK',
     destination_address='rDHpP3xnG2QRNtZc4KJPvtX3hidZbKRYHz',
@@ -55,10 +55,10 @@ tx = RippleTransaction(
 signed_transaction = client.sign(secret_key=YOUR_SECRET_KEY, tx)
 ```
 ## Submit your signed transaction to be executed
-```
+```python
 client.submit(signed_transaction['result']['tx_blob'])
 ```
 ## View your account transactions
-```
+```python
 client.account_tx('r9tGBU3Pg43r1xK9bHgfbsVXtLUWaRMYbK')`
 ```
