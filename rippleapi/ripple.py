@@ -16,7 +16,7 @@ class RippleClient(object):
         params['ledger_index'] = ledger_index or "validated"
 
         req = {
-            "method": "account_info",
+            "method": method,
             "params": [
                 params
             ]
@@ -42,7 +42,7 @@ class RippleClient(object):
             "account_index": account_index,
         }
         return self._request('account_currencies', params)
-
+    
     def account_tx(self,
                    account,
                    binary=False,
@@ -77,7 +77,7 @@ class RippleClient(object):
             "limit": limit,
         }
         return self._request('account_tx', params)
-    
+
     # account_currencies
     # account_channels
     # account_lines
@@ -88,6 +88,38 @@ class RippleClient(object):
     # gateway_balances
     # wallet_propose
 
+    ########################
+    # Transaction Commands #
+    ########################
+    def sign(self, secret_key, transaction):
+        params = {
+            "offline": False,
+            "secret": secret_key,
+            "tx_json": {
+                "Account": transaction.source_address,
+                "Amount": {
+                    "currency": transaction.currency,
+                    "issuer": transaction.issuer or transaction.source_address,
+                    "value": str(transaction.amount),
+                },
+                "Destination": transaction.destination_address,
+                "TransactionType": transaction.transaction_type,
+            },
+            "fee_mult_max": transaction.fee_mult_max,
+        }
+        return self._request('sign', params)
+
+    def submit(self, tx_blob):
+        '''
+        Given the BLOB that is returned after signing a transaction with secret
+        key, submit it to the server
+        
+        '''
+        params = {
+            'tx_blob': tx_blob
+        }
+        return self._request('submit', params)
+
     ######################
     # Ledger Information #
     ######################
@@ -97,3 +129,21 @@ class RippleClient(object):
     #########################
     # Admin Ripple Commands #
     #########################
+
+class RippleTransaction(object):
+    def __init__(self,
+                 source_address,
+                 destination_address,
+                 amount,
+                 currency="XRP",
+                 issuer=None,
+                 transaction_type="Payment",
+                 fee_mult_max=1000,
+                 ):
+        self.source_address = source_address
+        self.destination_address = destination_address
+        self.amount = amount
+        self.currency = currency
+        self.issuer = issuer
+        self.transaction_type = transaction_type
+        self.fee_mult_max = fee_mult_max
