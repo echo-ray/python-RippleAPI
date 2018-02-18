@@ -6,23 +6,28 @@ https://github.com/ripple/ripple-lib
 
 # Usage
 ## Install the package direct from github
-`pip install git+https://github.com/patrickshuff/python-RippleAPI`
+```
+pip install git+https://github.com/patrickshuff/python-RippleAPI
+```
 
 ## RECOMMENDED:  Generate your own keys and use Ripple TESTNet
 Go here to generate some keys before testing out this framework:
 https://ripple.com/build/xrp-test-net/
 
 ## Import the library
-`from rippleapi import (
+```
+from rippleapi import (
     RippleClient,
     RippleTransaction,
 )
-`
+```
 ## Instantiate a client object
-`client = RippleClient()`
-
+```
+client = RippleClient()
+```
 ## View current balance of an account
-`client.account_info('rDHpP3xnG2QRNtZc4KJPvtX3hidZbKRYHz')
+```
+client.account_info('rDHpP3xnG2QRNtZc4KJPvtX3hidZbKRYHz')
 {'result': {'account_data': {'Account': 'rDHpP3xnG2QRNtZc4KJPvtX3hidZbKRYHz',
    'Balance': '10000000000',
    'Flags': 0,
@@ -36,20 +41,24 @@ https://ripple.com/build/xrp-test-net/
   'ledger_index': 6804857,
   'status': 'success',
   'validated': True}}
-`
+```
 
 ## Create a new transaction
-`tx = RippleTransaction(
+```
+tx = RippleTransaction(
     source_address='r9tGBU3Pg43r1xK9bHgfbsVXtLUWaRMYbK',
     destination_address='rDHpP3xnG2QRNtZc4KJPvtX3hidZbKRYHz',
     amount=100,
     currency="USD",
 )
-`
+
 signed_transaction = client.sign(secret_key=YOUR_SECRET_KEY, tx)
-
+```
 ## Submit your signed transaction to be executed
+```
 client.submit(signed_transaction['result']['tx_blob'])
-
+```
 ## View your account transactions
-`client.account_tx('r9tGBU3Pg43r1xK9bHgfbsVXtLUWaRMYbK')`
+```
+client.account_tx('r9tGBU3Pg43r1xK9bHgfbsVXtLUWaRMYbK')`
+```
