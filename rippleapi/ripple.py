@@ -103,6 +103,8 @@ class RippleClient(object):
                     "value": str(transaction.amount),
                 },
                 "Destination": transaction.destination_address,
+                "DestinationTag": transaction.destination_tag,
+                "SourceTag": transaction.source_tag,
                 "TransactionType": transaction.transaction_type,
             },
             "fee_mult_max": transaction.fee_mult_max,
@@ -139,6 +141,8 @@ class RippleTransaction(object):
                  issuer=None,
                  transaction_type="Payment",
                  fee_mult_max=1000,
+                 destination_tag=None,
+                 source_tag=None,
                  ):
         self.source_address = source_address
         self.destination_address = destination_address
@@ -147,3 +151,5 @@ class RippleTransaction(object):
         self.issuer = issuer
         self.transaction_type = transaction_type
         self.fee_mult_max = fee_mult_max
+        self.destination_tag = destination_tag
+        self.source_tag = source_tag
